@@ -29,7 +29,7 @@ for i in ['lon','lat']:
 # In[3]:
 
 
-def process_piomass(year):
+def process_piomas(year):
     
     binary_dir = f'binaries/heff.H{year}'
     
@@ -68,12 +68,12 @@ def process_piomass(year):
                                     'lat':(['x','y'],grids['lat']),
                                     'month':(['t'],np.array(range(1,13)))})
         
-        ds.attrs['data_name'] = 'Monthly mean Piomass sea ice thickness data'
+        ds.attrs['data_name'] = 'Monthly mean Piomas sea ice thickness data'
         
         ds.attrs['description'] = """Sea ice thickness in meters on the native 360x120 grid, 
                                     data produced by University of Washington Polar Science Center"""
         
-        ds.attrs['year'] = f"""these data are for the year {year}"""
+        ds.attrs['year'] = f"""These data are for the year {year}"""
         
         ds.attrs['citation'] = """When using this data please use the citation: 
                                 Zhang, Jinlun and D.A. Rothrock: Modeling global sea 
@@ -83,7 +83,7 @@ def process_piomass(year):
         
         ds.attrs['code to read'] = """  # Example code to read a month of this data 
     
-                                        def read_month_of_piomass(year,month): 
+                                        def read_month_of_piomas(year,month): 
     
                                             data_dir = 'output/' 
 
@@ -110,7 +110,7 @@ def process_piomass(year):
 
 for year in range(1993,1994):
     
-    process_piomass(year)
+    process_piomas(year)
 
 
 # In[ ]:
