@@ -1,32 +1,31 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import numpy as np
 import pandas as pd
 import struct
 import xarray as xr
-
-
-# In[2]:
-
+import matplotlib.pyplot as plt
+from cartoplot import cartoplot
 
 grids = {}
 
+dims = (120,360)
+
 for i in ['lon','lat']:
 
-    grid = np.array(pd.read_csv(f'grids/{i}grid.dat',header=None, delim_whitespace=True))
+    grid = np.array(pd.read_csv(f'grids/{i}grid.dat',
+                                header=None,
+                                delim_whitespace=True))
 
     flat_grid = grid.ravel()
+    
+#     if i == 'lon':
 
-    shaped_grid = flat_grid.reshape(360,120)
+    shaped_grid = flat_grid.reshape(dims)
+        
+#     else:
+        
+#         shaped_grid = flat_grid.reshape((360,120))
     
     grids[i] = shaped_grid
-
-
-# In[3]:
 
 
 def process_piomas(year):
@@ -46,16 +45,22 @@ def process_piomas(year):
     
     # Put it in a 3D array
         
-        native_data = np.full((12,360,120),np.nan)
+        native_data = np.full((12,dims[0],dims[1]),np.nan)
 
         for month in range(1,13):
             
-            start = (month-1)*(360*120)
-            end = month*(360*120)
+            start = (month-1)*(dims[0]*dims[1])
+            end = month*(dims[0]*dims[1])
             thickness_list = np.array(data[start:end])
             
-            gridded = thickness_list.reshape(360,120)
+            gridded = thickness_list.reshape(dims[0],dims[1])
             native_data[month-1,:,:] = gridded
+            
+#             cartoplot(grids['lon'],grids['lat'],gridded)
+
+            plt.imshow(gridded)
+            
+            break
             
           
     ############################################################
@@ -102,19 +107,10 @@ def process_piomas(year):
         output_dir = f'output/'
 
         ds.to_netcdf(f'{output_dir}{year}.nc','w')
-        
 
-
-# In[4]:
-
+    return native_data
 
 for year in range(1993,1994):
     
-    process_piomas(year)
-
-
-# In[ ]:
-
-
-
+    x = process_piomas(year)
 
