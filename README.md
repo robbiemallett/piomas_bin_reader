@@ -9,3 +9,5 @@ This netcdf is self-describing and has the grid coordinates within it.
 
 While the code attributes describe the 'sea ice thickness' variable, 
 the code works for other variables too (just rename the strings)
+
+Thanks to Feng He from U. Wisconsin for recently helping me find a bug!
