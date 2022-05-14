@@ -69,8 +69,8 @@ def process_piomas(year):
         
         ds = xr.Dataset( data_vars={'thickness':(['t','x','y'],native_data)},
 
-                         coords =  {'lon':(['x','y'],grids['lon']),
-                                    'lat':(['x','y'],grids['lat']),
+                         coords =  {'longitude':(['x','y'],grids['lon']),
+                                    'latitude':(['x','y'],grids['lat']),
                                     'month':(['t'],np.array(range(1,13)))})
         
         ds.attrs['data_name'] = 'Monthly mean Piomas sea ice thickness data'
